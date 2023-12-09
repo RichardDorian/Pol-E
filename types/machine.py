@@ -1,0 +1,103 @@
+from typing import Any
+
+
+def reset() -> None: ...
+
+
+class I2C:
+    MASTER: int
+
+    def __init__(self, bus: int = 0) -> None: ...
+
+    def init(self, mode: int = MASTER, baudrate: int = 400000,
+             pins: tuple[str, str] = ('P9', 'P12')) -> None: ...
+
+    def scan(self) -> list[int]: ...
+
+    def readfrom(self, addr: int, nbytes: int) -> bytes: ...
+
+    def readfrom_into(self, addr: int, buf: bytearray) -> int: ...
+
+    def writeto(self, addr: int, buf: bytes | int,
+                *, stop: bool = True) -> None: ...
+
+    def readfrom_mem(self, addr: int, memaddr: int,
+                     nbytes: int, addrsize: int = 8) -> bytes: ...
+
+    def readfrom_mem_into(self, addr: int, memaddr: int,
+                          buf: bytearray, *, addrsize: int = 8) -> int: ...
+
+    def writeto_mem(self, addr: int, memaddr: int, buf: bytes |
+                    int, *, addrsize: int = 8) -> int: ...
+
+
+class Pin:
+    IN: int
+    OUT: int
+    OPEN_DRAIN: int
+
+    PULL_UP: int
+    PULL_DOWN: int
+
+    IRQ_FALLING: int
+    IRQ_RISING: int
+    IRQ_LOW_LEVEL: int
+    IRQ_HIGH_LEVEL: int
+
+    def __init__(self, id: str, mode: int = OUT,
+                 pull: int = None, alt: int = None) -> None: ...
+
+    def id(self) -> int: ...
+
+    def value(self, value: bool | None = None) -> None: ...
+
+    def __call__(self, value: bool | None = None) -> None: ...
+
+    def toggle(self) -> None: ...
+
+    def mode(self, mode: int | None = None) -> None: ...
+
+    def pull(self, pull: int | None = None) -> None: ...
+
+    def hold(hold: bool | None = None) -> None: ...
+
+    def callback(trigger: int, handler: callable |
+                 None = None, arg: Any = None) -> None: ...
+
+    exp_board: Any
+    module: Any
+
+
+class SD:
+    def __init__(self, id: int = 0) -> None: ...
+
+    def init(self, id: int = 0) -> None: ...
+
+    def deinit(self) -> None: ...
+
+
+class PWM:
+    def __init__(self, timer: int, frequency: int) -> None: ...
+
+    def channel(self, id: int, pin: str, duty_cycle: float = 0.5) -> None: ...
+
+    def duty_cycle(self, duty_cycle: float) -> None: ...
+
+
+class RTC:
+    INTERNAL_RC: int
+    XTAL_32KHZ: int
+
+    def __init__(self, id: int = 0) -> None: ...
+
+    def init(self, datetime: tuple[int, int, int, int,
+             int, int, int, str] | None = None, source: int | None = None) -> None: ...
+
+    def ntp_sync(self, server: str, update_period: int = 3600,
+                 backup_server: str | None = None) -> None: ...
+
+    def now(self) -> tuple[int, int, int, int, int, int, int, int]: ...
+
+    def synced(self) -> bool: ...
+
+    def memory(data: bytes | None = None) -> bytes | None: ...

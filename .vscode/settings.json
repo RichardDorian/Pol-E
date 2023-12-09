@@ -1,0 +1,12 @@
+{
+  "editor.tabSize": 4,
+  "python.analysis.extraPaths": ["./lib", "./types"],
+  "pymakr.ignore": [
+    ".vscode",
+    ".gitignore",
+    ".git",
+    "types",
+    "backend",
+    "docs"
+  ]
+}
