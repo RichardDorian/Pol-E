@@ -33,25 +33,26 @@ The robot communicates with the computer using a TCP connection (with the server
 
 As you can see, the protocol contains a very few amount of packets wich explains why the packet identifier is only a byte.
 
-| ID     | Name       | Description                                               | Direction         |
-| ------ | ---------- | --------------------------------------------------------- | ----------------- |
-| `0x00` | Reset      | Reset the device                                          | Computer -> Robot |
-| `0x01` | Start/Stop | Start/Stop the autonomous behavior                        | Computer -> Robot |
-| `0x02` | Sensors    | Sensors (temperature, humidity, pressure & battery level) | Robot -> Computer |
+| ID     | Name          | Description                                                  | Direction         |
+| ------ | ------------- | ------------------------------------------------------------ | ----------------- |
+| `0x00` | Reset         | Reset the device                                             | Computer -> Robot |
+| `0x01` | Start/Stop    | Start/Stop the autonomous behavior                           | Computer -> Robot |
+| `0x02` | Sensors       | Sensors (temperature, humidity, ...)                         | Robot -> Computer |
+| `0x03` | SetSpeedDelta | Set the speed delta (in %) between the left and right motors | Computer -> Robot |
 
 ## Packet details
 
 ### `0x00` - Reset
 
-**Packet size _(without header)_:**: `0`
+**Packet size _(without header)_**: `0`
 
 ### `0x01` - Start/Stop
 
-**Packet size _(without header)_:**: `0`
+**Packet size _(without header)_**: `0`
 
 ### `0x02` - Sensors
 
-**Packet size _(without header)_:**: `13`
+**Packet size _(without header)_**: `13`
 
 Battery level does not need to be as precise as the humidity, that's why we chose to send it as an unsigned byte.
 
@@ -60,4 +61,13 @@ Battery level does not need to be as precise as the humidity, that's why we chos
 | Temperature   | Temperature value (in celcius) | `Float` | `4`             |
 | Humidity      | Humidity value (in %)          | `Float` | `4`             |
 | Pressure      | Pressure value (in hPa)        | `Float` | `4`             |
+| Ambient Light | Ambient light in Lux           | `Float` | `4`             |
 | Battery level | Battery level (in %)           | `UByte` | `1`             |
+
+### `0x03` - SetSpeedDelta
+
+**Packet size _(without header)_**: `1`
+
+| Field       | Description                                                             | Type   | Size (in bytes) |
+| ----------- | ----------------------------------------------------------------------- | ------ | --------------- |
+| Speed delta | Speed delta (in %) between the left and right motors (from -100 to 100) | `Byte` | `1`             |

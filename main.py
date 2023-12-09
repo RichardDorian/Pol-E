@@ -16,8 +16,8 @@ if pycom.heartbeat():
 
     thread.start_new_thread(NetworkThread, ())
     thread.start_new_thread(SensorsThread, ())
-    thread.start_new_thread(DataThread, ())
     thread.start_new_thread(MovementThread, ())
+    thread.start_new_thread(DataThread, ())
 
     register_packet_handler(0x00, lambda _: machine.reset())
 
