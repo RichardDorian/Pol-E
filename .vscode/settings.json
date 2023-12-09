@@ -8,5 +8,9 @@
     "types",
     "backend",
     "docs"
-  ]
+  ],
+  "editor.formatOnSave": true,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.autopep8"
+  }
 }
