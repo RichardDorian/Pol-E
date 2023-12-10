@@ -65,7 +65,7 @@ def SensorsThread():
 
         if (last_data_dump_time + other_sensors_interval) <= now:
 
-            SensorsData.temperature = bme280.get_temperature_measurement()
+            SensorsData.temperature = bme280.get_temperature_measurement() - 4
             SensorsData.humidity = bme280.get_humidity_measurement()
             SensorsData.pressure = bme280.get_pressure_measurement()
 

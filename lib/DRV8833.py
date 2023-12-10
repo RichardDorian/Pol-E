@@ -5,8 +5,8 @@ from machine import Pin, PWM
 
 
 class DRV8833:
-    FORWARD = const(0)
-    REVERSE = const(1)
+    FORWARD = const(1)
+    REVERSE = const(-1)
 
     TIMER = const(1)
     FREQUENCY = const(500)
@@ -38,10 +38,10 @@ class DRV8833:
         DRV8833.is_valid_direction(direction)
 
         self.direction = direction
-        self.set_speed(self.speed)
+        self.set_speed(self.speed, new_direction_internal=True)
 
-    def set_speed(self, speed: float) -> None:
-        if speed == self.speed:
+    def set_speed(self, speed: float, new_direction_internal: bool = False) -> None:
+        if speed == self.speed and not new_direction_internal:
             return
         DRV8833.is_valid_speed(speed)
 
