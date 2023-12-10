@@ -1,11 +1,12 @@
 import ustruct
 
 
-def SensorsPacket(temperature: float, humidity: float, pressure: float, battery_level: int):
+def SensorsPacket(temperature: float, humidity: float, pressure: float, ambient_light: float, battery_level: int):
     return (0x02, ustruct.pack(
-        '<fffB',
+        '<ffffB',
         temperature,
         humidity,
         pressure,
+        ambient_light,
         battery_level
     ))

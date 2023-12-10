@@ -17,4 +17,4 @@ def get_battery_level() -> int:
 
 
 def get_battery_voltage() -> float:
-    return voltage.voltage()*2000
+    return voltage.voltage()*2e-3

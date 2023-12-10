@@ -13,13 +13,15 @@ HEADER = ['        Time        ',
           'Temperature (°C)', 'Humidity (%)', 'Pressure (hPa)', 'Battery level (%)']
 
 
-def DataThread():
+class DataData:
     sd_card_present = False
 
+
+def DataThread():
     try:
         sd = SD()
         mount(sd, '/sd')
-        sd_card_present = True
+        DataData.sd_card_present = True
 
         with open(FILE_PATH, 'w') as file:
             file.write(';'.join(HEADER))
@@ -36,9 +38,9 @@ def DataThread():
             continue
 
         queue_packet(SensorsPacket(SensorsData.temperature,
-                     SensorsData.humidity, SensorsData.pressure, SensorsData.battery_level))
+                     SensorsData.humidity, SensorsData.pressure, SensorsData.ambient_light, SensorsData.battery_level))
 
-        if sd_card_present:
+        if DataData.sd_card_present:
             file = open(FILE_PATH, 'a')
             file.write('\n{};{:2f};{:2f};{:2f};{d}'.format(
                 display_time, SensorsData.temperature, SensorsData.humidity, SensorsData.pressure, SensorsData.battery_level))

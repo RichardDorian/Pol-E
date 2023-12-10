@@ -1,3 +1,5 @@
+from math import log
+
 from micropython import const
 from machine import Pin, PWM
 
@@ -39,14 +41,19 @@ class DRV8833:
         self.set_speed(self.speed)
 
     def set_speed(self, speed: float) -> None:
+        if speed == self.speed:
+            return
         DRV8833.is_valid_speed(speed)
+
+        pwm = max(0, log((speed-1.001548)*-1.32857173224)
+                  * -0.220498900813)  # Linearilize the speed
 
         if self.direction == DRV8833.FORWARD:
             self.pwm_1.duty_cycle(0)
-            self.pwm_2.duty_cycle(speed)
+            self.pwm_2.duty_cycle(pwm)
         elif self.direction == DRV8833.REVERSE:
             self.pwm_2.duty_cycle(0)
-            self.pwm_1.duty_cycle(speed)
+            self.pwm_1.duty_cycle(pwm)
 
         self.speed = speed
 

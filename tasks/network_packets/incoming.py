@@ -16,5 +16,5 @@ def SetSpeedDeltaPacket(bytes: bytes) -> int:
 IncomingPackets = {
     0x00: ResetPacket,
     0x01: StartStopPacket,
-    0x04: SetSpeedDeltaPacket
+    0x03: SetSpeedDeltaPacket
 }
